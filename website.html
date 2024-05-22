@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminal Simulator</title>
+  <style>
+    body {
+      background-color: black;
+      color: green;
+      font-family: monospace;
+      padding: 20px;
+    }
+
+    .terminal {
+      border: 2px solid green;
+      border-radius: 5px;
+      padding: 20px;
+      background-color: black;
+      width: 80%;
+      margin: auto;
+      overflow: auto;
+      height: 400px;
+    }
+
+    .input-line {
+      margin-bottom: 10px;
+    }
+
+    .input {
+      color: green;
+      display: inline;
+    }
+
+    .prompt {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal" id="terminal">
+    <div class="input-line">
+      <span class="prompt">user@linux:~$</span> <input class="input" id="input" autofocus>
+    </div>
+  </div>
+
+  <script>
+    const terminal = document.getElementById('terminal');
+    const inputElement = document.getElementById('input');
+
+    function simulateTerminal() {
+      const welcomeMessage = "Welcome to the Terminal Simulator\nType 'help' to see available commands";
+      printMessage(welcomeMessage);
+
+      inputElement.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          const command = inputElement.value.trim();
+          inputElement.value = '';
+          handleCommand(command);
+        }
+      });
+    }
+
+    function handleCommand(command) {
+      switch (command.toLowerCase()) {
+        case 'help':
+          printMessage("Available commands:\n- help: Display available commands\n- about: Display information about the terminal\n- contact: Display contact information\n- clear: Clear the terminal");
+          break;
+        case 'about':
+          printMessage("Terminal Simulator\nThis is a simple interactive terminal simulator created using HTML, CSS, and JavaScript.");
+          break;
+        case 'contact':
+          printMessage("Contact Information:\n- Email: your.email@example.com\n- Phone: +1234567890");
+          break;
+        case 'clear':
+          clearTerminal();
+          break;
+        default:
+          printMessage("Command not recognized. Type 'help' to see available commands.");
+      }
+    }
+
+    function printMessage(message) {
+      const outputLine = document.createElement('div');
+      outputLine.textContent = message;
+      terminal.appendChild(outputLine);
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function clearTerminal() {
+      terminal.innerHTML = '';
+      const welcomeMessage = "Terminal cleared.\nType 'help' to see available commands";
+      printMessage(welcomeMessage);
+    }
+
+    simulateTerminal();
+  </script>
+</body>
+</html>
